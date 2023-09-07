@@ -14,20 +14,21 @@ def get_page():
 	global url
 	
 	# Code here - Ask the user to input "Enter url of a medium article: " and collect it in url
-	xin = input("enter input")
+	url = input("enter input")
 	# Code ends here
 	
 	# handling possible error
-	if not re.match(r'https?://medium.com/',url):
+	if not re.match(r'https?://medium.com/', url):
 		print('Please enter a valid website, or make sure it is a medium article')
 		sys.exit(1)
 
 	# Code here - Call get method in requests object, pass url and collect it in res
-	
+	res = requests.get(url)
 	# Code ends here
 
 	res.raise_for_status()
 	soup = BeautifulSoup(res.text, 'html.parser')
+	
 	return soup
 
 # function to remove all the html tags and replace some with specific strings
@@ -57,7 +58,8 @@ def save_file(text):
 	fname = f'scraped_articles/{name}.txt'
 	
 	# Code here - write a file using with (2 lines)
-	
+	with open(fname, 'w+') as file:
+		file.write(text)
 
 	# Code ends here
 
@@ -68,4 +70,4 @@ if __name__ == '__main__':
 	text = collect_text(get_page())
 	save_file(text)
 	# Instructions to Run this python code
-	# Give url as https://medium.com/@subashgandyer/papa-what-is-a-neural-network-c5e5cc427c7
+	# Give url as https://medium.com/@subashgandyer/papa-what-is-a-neural-Snetwork-c5e5cc427c7
